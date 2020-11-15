@@ -1,0 +1,10 @@
+analyzer:
+  exclude: [build/**]
+  strong-mode:
+    implicit-casts: false
+
+linter:
+  rules:
+    - camel_case_types
+    - unnecessary_new
+    - unnecessary_const

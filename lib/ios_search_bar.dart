@@ -26,7 +26,7 @@ class IOSSearchBar extends AnimatedWidget {
   final FocusNode focusNode;
 
   /// The function to call when the "Cancel" button is pressed
-  final Function onCancel;
+  final Function() onCancel;
 
   /// The function to call when the "Clear" button is pressed
   final Function onClear;
@@ -37,44 +37,43 @@ class IOSSearchBar extends AnimatedWidget {
   /// The function to call when the text field is submitted
   final Function(String) onSubmit;
 
-  static final _opacityTween = new Tween(begin: 1.0, end: 0.0);
-  static final _paddingTween = new Tween(begin: 0.0, end: 60.0);
+  static final _opacityTween = Tween(begin: 1.0, end: 0.0);
+  static final _paddingTween = Tween(begin: 0.0, end: 60.0);
   static final _kFontSize = 13.0;
 
   @override
   Widget build(BuildContext context) {
-    final Animation<double> animation = listenable;
-    return new Padding(
+    final Animation<double> animation = listenable as Animation<double>;
+    return Padding(
       padding: const EdgeInsets.fromLTRB(10.0, 0.0, 20.0, 0.0),
-      child: new Row(
+      child: Row(
         children: <Widget>[
-          new Expanded(
-            child: new Container(
+          Expanded(
+            child: Container(
               padding:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-              decoration: new BoxDecoration(
+              decoration: BoxDecoration(
                 color: CupertinoColors.white,
-                border:
-                    new Border.all(width: 0.0, color: CupertinoColors.white),
-                borderRadius: new BorderRadius.circular(10.0),
+                border: Border.all(width: 0.0, color: CupertinoColors.white),
+                borderRadius: BorderRadius.circular(10.0),
               ),
-              child: new Stack(
+              child: Stack(
                 alignment: Alignment.centerLeft,
                 children: <Widget>[
-                  new Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      new Padding(
+                      Padding(
                         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 4.0, 1.0),
-                        child: new Icon(
+                        child: Icon(
                           CupertinoIcons.search,
                           color: CupertinoColors.inactiveGray,
                           size: _kFontSize + 2.0,
                         ),
                       ),
-                      new Text(
+                      Text(
                         'Search',
-                        style: new TextStyle(
+                        style: TextStyle(
                           inherit: false,
                           color: CupertinoColors.inactiveGray
                               .withOpacity(_opacityTween.evaluate(animation)),
@@ -83,19 +82,20 @@ class IOSSearchBar extends AnimatedWidget {
                       ),
                     ],
                   ),
-                  new Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      new Expanded(
-                        child: new Padding(
+                      Expanded(
+                        child: Padding(
                           padding: const EdgeInsets.only(left: 20.0),
-                          child: new EditableText(
+                          child: EditableText(
+                            backgroundCursorColor: CupertinoColors.black,
                             controller: controller,
                             focusNode: focusNode,
                             onChanged: onUpdate,
                             onSubmitted: onSubmit,
-                            style: new TextStyle(
+                            style: TextStyle(
                               color: CupertinoColors.black,
                               inherit: false,
                               fontSize: _kFontSize,
@@ -104,14 +104,14 @@ class IOSSearchBar extends AnimatedWidget {
                           ),
                         ),
                       ),
-                      new CupertinoButton(
+                      CupertinoButton(
                         minSize: 10.0,
                         padding: const EdgeInsets.all(1.0),
-                        borderRadius: new BorderRadius.circular(30.0),
+                        borderRadius: BorderRadius.circular(30.0),
                         color: CupertinoColors.inactiveGray.withOpacity(
                           1.0 - _opacityTween.evaluate(animation),
                         ),
-                        child: new Icon(
+                        child: Icon(
                           Icons.close,
                           size: 8.0,
                           color: CupertinoColors.white,
@@ -129,15 +129,15 @@ class IOSSearchBar extends AnimatedWidget {
               ),
             ),
           ),
-          new SizedBox(
+          SizedBox(
             width: _paddingTween.evaluate(animation),
-            child: new CupertinoButton(
+            child: CupertinoButton(
               padding: const EdgeInsets.only(left: 8.0),
               onPressed: onCancel,
-              child: new Text(
+              child: Text(
                 'Cancel',
                 softWrap: false,
-                style: new TextStyle(
+                style: TextStyle(
                   inherit: false,
                   color: CupertinoColors.white,
                   fontSize: _kFontSize,

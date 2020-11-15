@@ -9,27 +9,27 @@ void main() {
   Duration _animationDuration;
   TextEditingController _searchTextController;
   FocusNode _searchFocusNode;
-  Animation _animation;
+  Animation<double> _animation;
   AnimationController _animationController;
 
   setUp(() {
-    _searchBarKey = new UniqueKey();
-    _animationDuration = new Duration(milliseconds: 200);
+    _searchBarKey = UniqueKey();
+    _animationDuration = Duration(milliseconds: 200);
 
-    _searchTextController = new TextEditingController();
-    _searchFocusNode = new FocusNode();
+    _searchTextController = TextEditingController();
+    _searchFocusNode = FocusNode();
   });
 
   tearDown(() {
     _animationController.dispose();
   });
 
-  Future<Null> _buildSearchBar(WidgetTester tester) {
-    _animationController = new AnimationController(
+  Future<void> _buildSearchBar(WidgetTester tester) {
+    _animationController = AnimationController(
       duration: _animationDuration,
       vsync: tester,
     );
-    _animation = new CurvedAnimation(
+    _animation = CurvedAnimation(
       parent: _animationController,
       curve: Curves.easeInOut,
       reverseCurve: Curves.easeInOut,
@@ -41,36 +41,35 @@ void main() {
       }
     });
 
-    return tester.pumpWidget(new StatefulBuilder(
-      builder: (BuildContext context, StateSetter setState) {
-        return new MaterialApp(
-          home: new CupertinoPageScaffold(
-            navigationBar: new CupertinoNavigationBar(
-              middle: new IOSSearchBar(
-                key: _searchBarKey,
-                controller: _searchTextController,
-                focusNode: _searchFocusNode,
-                animation: _animation,
-                onCancel: () {
-                  _searchTextController.clear();
-                  _searchFocusNode.unfocus();
-                  _animationController.reverse();
-                },
-                onClear: () {
-                  _searchTextController.clear();
-                },
-                onSubmit: (String text) {
-                  _searchTextController.clear();
-                  _searchFocusNode.unfocus();
-                  _animationController.reverse();
-                },
-              ),
+    return tester.pumpWidget(
+        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+      return MaterialApp(
+        home: CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+            middle: IOSSearchBar(
+              key: _searchBarKey,
+              controller: _searchTextController,
+              focusNode: _searchFocusNode,
+              animation: _animation,
+              onCancel: () {
+                _searchTextController.clear();
+                _searchFocusNode.unfocus();
+                _animationController.reverse();
+              },
+              onClear: () {
+                _searchTextController.clear();
+              },
+              onSubmit: (String text) {
+                _searchTextController.clear();
+                _searchFocusNode.unfocus();
+                _animationController.reverse();
+              },
             ),
-            child: new Container(),
           ),
-        );
-      }
-    ));
+          child: Container(),
+        ),
+      );
+    }));
   }
 
   testWidgets('test text input', (WidgetTester tester) async {
