@@ -6,6 +6,18 @@ A Cupertino-style widget for text input with animations.
 
 ## Getting Started
 
+Add the ios_search_bar package to your dependencies by editing your pubspec.yaml file.
+
+```yaml
+  dependencies:
+  flutter:
+    sdk: flutter
+  ios_search_bar:
+    git:
+      url: git://github.com/kblauhut/ios_search_bar.git
+      ref: master
+```
+
 To use the widget, setup an animation controller and focus node like the example below.
 
 ```dart
